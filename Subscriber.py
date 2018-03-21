@@ -1,6 +1,6 @@
 import sqlite3 as sql
 import paho.mqtt.client as mqtt
-from datetime import datetime
+from datetime import date, datetime
 import json
 
 def on_connect(client, userdata, flag, rc):
@@ -10,14 +10,17 @@ def on_message(client, userdata, msg):
     con = sql.connect('location.db')
     cur = con.cursor()
     try:
-        cur.execute("CREATE TABLE Location(longitude NUMBER(10,6), latitude NUMBER(10,6), time VARCHAR2(17));")
+        cur.execute("CREATE TABLE Location(longitude NUMBER(10,6), latitude NUMBER(10,6), date VARCHAR2(20), time VARCHAR2(20));")
     except:
         pass
     data = json.loads(msg.payload.decode("utf8"))
     print(data["lon"],data["lat"])
-    time = datetime.now()
-    print(time)
-    cur.execute("INSERT INTO Location values(?,?,?);", (data["lon"], data["lat"], time))
+    day = date.today()
+    dat = datetime.now()
+    times = datetime.time(dat)
+    print(day)
+    print(times)
+    cur.execute("INSERT INTO Location values(?,?,?,?);", (data["lon"], data["lat"], str(day), str(times)))
     con.commit()
     cur.close()
     con.close()
