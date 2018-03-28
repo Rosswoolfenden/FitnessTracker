@@ -1,7 +1,13 @@
+import json, os
 import sqlite3 as sql
-import paho.mqtt.client as mqtt
+try:
+    import paho.mqtt.client as mqtt
+except:
+    os.system('sudo pip3 install paho-mqtt')
+    os.system('python3 Subscriber.py')
 from datetime import date, datetime
-import json
+def on_connect(client, userdata, flag, rc):
+        client.subscribe("owntracks/user/ALL Project2")
 
 def on_connect(client, userdata, flag, rc):
         client.subscribe("owntracks/user/nanofork")
