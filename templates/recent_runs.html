@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['bar']});
+          google.charts.setOnLoadCallback(drawCharts);
+
+
+          function drawCharts() {
+            var cal_data = google.visualization.arrayToDataTable([
+              ['Date', 'Calories Burned During Run'],
+              {% for dates, cal in cal_data %}
+              ['{{dates}}',{{cal}}],
+              {% endfor %}
+            ]);
+
+            var dist_data = google.visualization.arrayToDataTable([
+              ['Date', 'Distance(miles)'],
+              {% for dates, distances in dist_data %}
+              ['{{dates}}',{{distances}}],
+              {% endfor %}
+            ]);
+
+            var options = {
+              chart: {
+                title: 'Calories Burned',
+              },
+              bars: 'vertical' // Required for Material Bar Charts.
+            };
+
+            var options2 = {
+              chart: {
+                title: 'Distance travelled',
+              },
+              bars: 'vertical' // Required for Material Bar Charts.
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_div'));
+            chart.draw(cal_data, google.charts.Bar.convertOptions(options));
+            var chart2 = new google.charts.Bar(document.getElementById('chart_div2'));
+            chart2.draw(dist_data, google.charts.Bar.convertOptions(options2));
+          }
+
+        </script>
+
+    <meta charset="utf-8">
+    <title>recent</title>
+    </head>
+    <body>
+        <table width="950" border="0">
+          <tbody>
+            <tr style="font-size:40px;">
+              <td style="font-family:Arial;">Locaton Tracker</td>
+            </tr>
+          </tbody>
+
+        </table>
+        <table width="450" border="0">
+          <tbody>
+            <tr style="font-size:20px; font-family:Arial;">
+                <td><a href="index">Home</a></td>
+                <td><a href="recent_runs">Recent Runs</a></td>
+                <td><a href="about">About</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <form action="recent_runs">
+            Weight:<br>
+            <input type="number" name="weight" value="60">
+            <input type="submit" value="submit">
+        </form>
+        <table width="1500" border="0">
+            <tbody>
+                <tr>
+                    <td><div id="chart_div" style="width: 900px; height: 500px;"></div></td>
+                    <td><div id="chart_div2" style="width: 900px; height: 500px;"></div></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table width="750" border="0">
+          <tbody>
+            <tr style="font-size:15px;">
+                <td style="font-family:Arial;">The graphs above shows how many calories were burned during your recent runs. With these graphs you can track your best runs and see if you have improved over time.&nbsp;</td>
+
+            </tr>
+          </tbody>	
+        </table>
+    </body>
+</html>
