@@ -1,7 +1,17 @@
-import cherrypy
+import math, os
+try:
+    import cherrypy
+except:
+    os.system('sudo pip3 install cherrypy')
+    os.system('python3 Webpage.py')
+try:
+    import jinja2
+except:
+    os.system('sudo pip3 install markupsafe')
+    os.system('sudo pip3 install jinja2')
+    os.system('python3 Webpage.py')
 import sqlite3 as sql
 from datetime import datetime, date, time
-import math, jinja2, os
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')),extensions=['jinja2.ext.autoescape'])
 
