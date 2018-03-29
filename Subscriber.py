@@ -23,6 +23,7 @@ def on_message(client, userdata, msg):
     day = date.today()
     clock = datetime.now()
     time = datetime.time(clock)
+    print(str(data["lon"]) + " " + str(data["lat"]) + " " + str(day) + " " + str(time))
     cur.execute("INSERT INTO Location values(?,?,?,?);", (data["lon"], data["lat"], str(day), str(time))) #puts the latitude, longitude from the posted message as well as the date and time when it was posted into the database
     con.commit()
     cur.close()
